@@ -1,2 +1,2 @@
 #!/bin/bash
-printf "The absolute path name of the current working directory is: %s\n" "$(pwd)"
+printf "$(pwd)"
