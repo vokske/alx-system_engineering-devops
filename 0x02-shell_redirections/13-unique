@@ -1,2 +1,2 @@
 #!/bin/bash
-ls -1 .* | sort | uniq -u > 13_unique
+ls -1 .* | sort | uniq -u > 13-unique
