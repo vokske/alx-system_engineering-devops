@@ -1,2 +1,2 @@
 #!/bin/bash
-read -u3 > echo "$REPLY"
+read -u3 iacta > echo "$REPLY"
