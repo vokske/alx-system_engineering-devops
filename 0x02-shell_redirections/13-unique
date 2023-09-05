@@ -1,0 +1,2 @@
+#!/bin/bash
+ls -1 list | sort | uniq -u > sorted_list
