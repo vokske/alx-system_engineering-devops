@@ -1,2 +1,2 @@
 #!/bin/bash
-read -u3 iacta > echo "$REPLY"
+cat iacta | head -n 3 | tail -n 1
