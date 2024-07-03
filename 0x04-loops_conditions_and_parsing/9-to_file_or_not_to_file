@@ -7,9 +7,9 @@ if [ -e "$target_file" ]; then
 	echo "school file exists"
 
 	if [ -s "$target_file" ]; then
-		echo "school file is empty"
-	else
 		echo "school file is not empty"
+	else
+		echo "school file is empty"
 	fi
 
 	if [ -f "$target_file" ]; then
