@@ -4,6 +4,6 @@
 
 while IFS=: read -r username x userID groupID _ homedir shell
 do
-	echo "The user $username is part of the $groupID gang, lives in $homedir and rides $shell. $userID place is protected by the passcode $x, more info about the user here: $username"
+	echo "The user $username is part of the $groupID gang, lives in $homedir and rides $shell. $userID's place is protected by the passcode $x, more info about the user here: $username"
 
 done < /etc/passwd
