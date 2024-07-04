@@ -3,8 +3,12 @@
 
 target_file="/etc/passwd"
 
-while IFS=: read -r username _ userID _ _ homedir _
+while read -r line
 do
+	username=$(echo "$line" | cut -d: -f1)
+	userID=$(echo "$line" | cut -d: -f3)
+	homedir=$(echo "$line" | cut -d: -f6)
+
 	echo "$username:$userID:$homedir"
 done < $target_file
 
