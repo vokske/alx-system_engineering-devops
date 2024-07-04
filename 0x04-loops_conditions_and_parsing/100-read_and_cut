@@ -3,7 +3,7 @@
 
 target_file="/etc/passwd"
 
-while IFS=: read -r username x userID groupID gecos homedir shell
+while IFS=: read -r username _ userID _ _ homedir _
 do
 	echo "$username:$userID:$homedir"
 done < $target_file
