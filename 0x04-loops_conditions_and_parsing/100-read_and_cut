@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# Bash script that displays the content of the file "/etc/passwd"
+
+target_file="/etc/passwd"
+
+while IFS=: read -r username x userID groupID gecos homedir shell
+do
+	echo "$username:$userID:$homedir"
+done < $target_file
+
