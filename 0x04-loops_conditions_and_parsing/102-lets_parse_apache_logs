@@ -2,10 +2,4 @@
 # Bash script that displays the visitor IP
 # along with the HTTP status code from the Apache log file
 
-awk '{
-	if (match($0, /^([^ ]+) /, ip)) {
-		match($0, /" [0-9]{3} /);
-		status = substr($0, RSTART+2, 3);
-		print ip[1], status;
-	}
-}' apache-access.log
+awk '{ print $1 " " $9 }' apache-access.log
