@@ -4,8 +4,4 @@
 
 file="apache-access.log"
 
-awk '{
-	match($0, /^([^ ]+)/, ip);
-	match($0, /" [0-9]{3}/, status);
-	print ip[0], substr(status[0], 2)
-}' "$file"
+awk '{ match($0, /^([^ ]+)/, ip); match($0, /" [0-9]{3}/, status); print ip[0], substr(status[0], 2) }' "$file"
