@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# Displays a custom string indefinitely with a sleep 2 in between iterations
+# and a custome message when receving SIGTERM signal
+
+i=0
+
+while [ $i -ge 0 ];
+do
+	echo "To infinity and beyond"
+	sleep 2
+	((i++))
+	trap 'echo "I am invincible!!!"' SIGTERM
