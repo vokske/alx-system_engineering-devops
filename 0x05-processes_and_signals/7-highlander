@@ -4,10 +4,10 @@
 
 i=0
 
-trap 'echo I am invincible!!!' SIGTERM
 while [ $i -ge 0 ];
 do
 	echo "To infinity and beyond"
 	sleep 2
 	((i++))
+	trap 'echo I am invincible!!!' SIGTERM
 done
