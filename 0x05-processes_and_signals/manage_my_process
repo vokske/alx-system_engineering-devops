@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# Indefinitely writes a custom message to a file
+
+while ((1))
+do
+	echo "I am alive!" > /tmp/my_process
+	sleep 2
+done
