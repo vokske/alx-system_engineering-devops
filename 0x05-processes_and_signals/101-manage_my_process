@@ -28,7 +28,7 @@ if [ $1 = "start" ]; then
 	handle_start
 elif [ $1 = "stop" ]; then
 	handle_stop
-elif [ $1" = "restart" ]; then
+elif [ $1 = "restart" ]; then
 	handle_restart
 else
 	echo "Usage: manage_my_process {start|stop|restart}"
