@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 # Shows all active IPV4 addresses on a machine
 
-netstat -an | grep 0.0.0.0
+netstat -ln | grep 0.0.0.0 | awk '{print $4}'
 
