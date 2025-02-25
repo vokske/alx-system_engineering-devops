@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+# Configure redirection
+
+sudo tee /var/www/html/404.html > /dev/null <<EOL
+<!DOCTYPE html>
+<html>
+<head>
+	<title>404 Not Found</title>
+</head>
+<body>
+	<h1>404 Not Found</h1>
+	<p>Ceci n'est pas une page</p>
+</body>
+</html>
+EOL
+
+# Configure Nginx to include the custom 404 page
+
+sudo tee /etc/nginx/sites-available/default > /dev/null <<EOF
+server {
+        listen 80 default_server;
+        listen [::]:80 default_server;
+
+        root /var/www/html;
+        index index.html;
+
+        server_name _;
+
+        location / {
+                try_files \$uri \$uri/ =404;
+        }
+
+        location /redirect_me {
+                return 301 https://www.haproxy.com/documentation/haproxy-configuration-tutorials/core-concepts/acls/;
+        }
+
+	error_page 404 /404.html;
+	location = /404.html {
+		internal;
+	}
+}
+EOF
+
+# Test the Nginx configuration
+sudo nginx -t
+
+# Restart Nginx
+sudo service nginx restart

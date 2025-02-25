@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+# Configure redirection
+
+sudo tee /etc/nginx/sites-available/default > /dev/null <<EOF
+server {
+	listen 80 default_server;
+	listen [::]:80 default_server;
+
+	root /var/www/html;
+	index index.html;
+
+	server_name _;
+
+	location / {
+		try_files \$uri \$uri/ =404;
+	}
+
+	location /redirect_me {
+		return 301 https://www.haproxy.com/documentation/haproxy-configuration-tutorials/core-concepts/acls/;
+	}
+}
+EOF
+
+# Test the Nginx configuration
+sudo nginx -t
+
+# Restart Nginx
+sudo service nginx restart
