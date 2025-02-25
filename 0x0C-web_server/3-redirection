@@ -1,6 +1,12 @@
 #!/usr/bin/env bash
 # Configure redirection
 
+# Install Nginx
+sudo apt-get update
+sudo apt-get -y install nginx
+echo "Hello World!" | sudo tee /var/www/html/index.nginx-debian.html > /dev/null
+
+# Configure redirection
 sudo tee /etc/nginx/sites-available/default > /dev/null <<EOF
 server {
 	listen 80 default_server;
