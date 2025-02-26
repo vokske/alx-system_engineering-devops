@@ -1,13 +1,56 @@
 #!/usr/bin/env bash
 # Configure Nginx to include a custom header
 
+# Install Nginx
 sudo apt-get update
 sudo apt-get -y install nginx
 echo "Hello World!" | sudo tee /var/www/html/index.nginx-debian.html > /dev/null
+
+# Create a custom 404 Not Found page
+sudo tee /var/www/html/404.html > /dev/null <<EOL
+<!DOCTYPE html>
+<html>
+<head>
+	<title>404 Not Found</title>
+</head>
+<body>
+	<h1>404 Not Found</h1>
+	<p>Ceci n'est pas une page</p>
+</body>
+</html>
+EOL
+
+# Configure Nginx to include the custom 404 page
+
 sudo tee /etc/nginx/sites-available/default > /dev/null <<EOF
 server {
-	add_header X-Served-By $hostname;
+        listen 80 default_server;
+        listen [::]:80 default_server;
+
+        root /var/www/html;
+        index index.html;
+
+        server_name _;
+
+        location / {
+                try_files \$uri \$uri/ =404;
+        }
+
+        location /redirect_me {
+                return 301 https://www.google.com/;
+        }
+
+	error_page 404 /404.html;
+	location = /404.html {
+		internal;
+	}
+
+	add_header X-Served-By "$hostname";
 }
 EOF
 
+# Test the Nginx configuration
+sudo nginx -t
+
+# Restart Nginx
 sudo service nginx restart
