@@ -1,4 +1,4 @@
-# Install Nginx Web server with Puppet
+# Configure Nginx Web server with Puppet
 
 # Install Nginx
 package {'nginx':
@@ -9,6 +9,9 @@ package {'nginx':
 file {'/var/www/html/index.html':
 	ensure => file,
 	content => "Hello World!\n",
+	owner => 'root',
+	group => 'root',
+	mode => '0644',
 	require => Package['nginx'],
 }
 
@@ -29,11 +32,14 @@ server {
 		try_files \$uri \$uri/ =404;
 	}
 
-	location /redict_me {
-		return 301 https://www.haproxy.com/documentation/haproxy-configuration-tutorials/core-concepts/acls/;
+	location /redirect_me {
+		return 301 https://www.google.com/;
 	}
 }
 ",
+	owner => 'root',
+	group => 'root',
+	mode => '0644',
 	require => Package['nginx'],
 	notify => Service['nginx'],
 }
