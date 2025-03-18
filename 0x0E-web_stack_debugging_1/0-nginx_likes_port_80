@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# Script start the nginx service
+
+sudo service nginx start
