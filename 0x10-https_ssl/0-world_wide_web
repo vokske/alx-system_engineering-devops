@@ -1,6 +1,17 @@
 #!/usr/bin/env bash
 # Script displays information about subdomains.
 
+# Resolve the CNAME chain recursively until an IP is found
+resolve_cname() {
+    local domain=$1
+    result=$(dig +short "$domain")
+    if [[ $result =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+        echo "$result"  # It's an IP address
+    else
+        resolve_cname "$result"  # Recursively resolve the CNAME
+    fi
+}
+
 # Function to get DNS roecord information
 get_dns_info() {
 	local domain=$1
@@ -11,8 +22,9 @@ get_dns_info() {
 	record=$(dig +noall +answer "$full_domain" CNAME)
 	if [ -n "$record" ]; then
 		# If CNAME exists, extract the target
-		output=$(echo "$record" | awk '{print $5}')
+		cname_target=$(echo "$record" | awk '{print $5}')
 		record_type="CNAME"
+		output=$(resolve_cname "$cname_target")
 	else
 		# If no CNAME, assume it's an A record and get the IP
 		output=$(dig +short "$full_domain" | head -n 1)
