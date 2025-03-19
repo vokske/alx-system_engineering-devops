@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+# Script displays information about subdomains.
+
+# Function to get DNS roecord information
+get_dns_info() {
+	local domain=$1
+	local subdomain=$2
+	local full_domain="${subdomain}.${domain}"
+
+	# Get the raw DNS record
+	record=$(dig +noall +answer "$full_domain" CNAME)
+	if [ -n "$record" ]; then
+		# If CNAME exists, extract the target
+		output=$(echo "$record" | awk '{print $5}')
+		record_type="CNAME"
+	else
+		# If no CNAME, assume it's an A record and get the IP
+		output=$(dig +short "$full_domain" | head -n 1)
+		record_type="A"
+	fi
+	echo "The subdomain $subdomain is a $record_type record and point to $output"
+}
+
+# Main script
+domain=$1
+subdomain=$2
+
+# If only domain is provided, check specific subdomains in order
+if [ -z "$subdomain" ]; then
+	for sub in www lb-01 web-01 web-02; do
+		get_dns_info "$domain" "$sub"
+	done
+else
+	# If subdomain is provided, check only that subdomain
+	get_dns_info "$domain" "$subdomain"
+fi
