@@ -18,7 +18,7 @@ get_dns_info() {
 		output=$(dig +short "$full_domain" | head -n 1)
 		record_type="A"
 	fi
-	echo "The subdomain $subdomain is a $record_type record and point to $output"
+	echo "The subdomain $subdomain is a $record_type record and points to $output"
 }
 
 # Main script
