@@ -13,7 +13,7 @@ resolve_cname() {
 		    return
 	    elif [[ $line =~ \.$ ]]; then
 		    # If it's a domain name, resolve it recursively
-		    resolve_cname "$line"
+		    resolve_cname "${line%.}"
 		    return
 	    fi
     done
