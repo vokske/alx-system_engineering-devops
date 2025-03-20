@@ -5,11 +5,18 @@
 resolve_cname() {
     local domain=$1
     result=$(dig +short "$domain")
-    if [[ $result =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-        echo "$result"  # It's an IP address
-    else
-        resolve_cname "$result"  # Recursively resolve the CNAME
-    fi
+
+    # Loop through each response line
+    for line in $result; do
+	    if [[ $line =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+		    echo "$line"
+		    return
+	    elif [[ $line =~ \.$ ]]; then
+		    # If it's a domain name, resolve it recursively
+		    resolve_cname "$line"
+		    return
+	    fi
+    done
 }
 
 # Function to get DNS roecord information
